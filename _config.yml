@@ -18,3 +18,5 @@ minima:
 plugins:
 - jekyll-remote-theme
 future: true
+header_pages:
+  - game.md
