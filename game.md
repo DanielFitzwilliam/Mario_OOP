@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Game_TEST?
+title: Game
 ---
 
 <style>
