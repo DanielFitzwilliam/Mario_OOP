@@ -1,7 +1,7 @@
 import {platform} from "./platform.js"
 
     // Get text element for Mario's health
-    let marioState = document.getElementById("Mario_State")
+    let marioStateMessage = document.getElementById("Mario_State")
 
     // Create empty canvas
     let canvas = document.getElementById('canvas');
@@ -27,7 +27,16 @@ import {platform} from "./platform.js"
             this.width = 30;
             this.height = 30;
             //Player "grounded" variable
-            this.grounded;
+            this.grounded = 0;
+        }
+        reset() {
+            this.position.x = 100;
+            this.position.y = 200;
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+            this.width = 30;
+            this.height = 30;
+            this.grounded = 0;
         }
         // Method to draw the player on the canvas
         draw() {
@@ -69,7 +78,8 @@ import {platform} from "./platform.js"
             };
         };
         killPlayer() {
-            marioState.innerHTML = "Mario is dead, and it's all your fault."
+            marioStateMessage.innerHTML = "Mario is dead, and it's all your fault."
+            this.reset();
         };
     };
     // Create a player object
