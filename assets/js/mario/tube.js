@@ -4,7 +4,7 @@ class Tube {
     constructor(image) {
         // Initial position of the tube
         this.position = {
-            x: 500,
+            x: 200,
             y: 180
         };
         this.image = image;

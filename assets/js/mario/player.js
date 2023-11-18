@@ -66,19 +66,24 @@ import {tube} from "./tube.js"
             } else {
                 player.velocity.x = 0;
             };
-            this.handleFloorCollision();
+            this.handleFloorCollision(platform.position.x, platform.position.y, platform.width, platform.height);
+            if (this.grounded === 0) {
+                this.handleFloorCollision(tube.position.x, tube.position.y, tube.width, tube.height);
+            };
+            if (this.grounded === 0) {
+                this.velocity.y += gravity;
+            };
             this.handleDeathCondition();
         };
         // Method to detect if the player is on the ground.
-        handleFloorCollision() {
-            if (this.position.x < platform.position.x + platform.width && this.position.x + this.width + this.velocity.x >= platform.position.x &&
-                this.position.y < platform.position.y + platform.height && this.position.y + this.height + this.velocity.y >= platform.position.y
+        handleFloorCollision(left, top, right, bottom) {
+            if (this.position.x < left + right && this.position.x + this.width + this.velocity.x >= left &&
+                this.position.y < top + bottom && this.position.y + this.height + this.velocity.y >= top
             ) {
                 this.velocity.y = 0;
                 this.grounded = 1;
             } else {
                 this.grounded = 0;
-                this.velocity.y += gravity;
             };
         };
         // Method to detect if the player is dead
