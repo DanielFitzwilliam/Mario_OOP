@@ -5,18 +5,18 @@ import {ctx} from "./player.js"
         constructor(image) {
             // Initial position of the platform
             this.position = {
-                x: 0,
+                x: -300,
                 y: 300
-            }
+            };
             this.image = image;
             this.width = 650;
             this.height = 100;
-        }
+        };
         // Method to draw the platform on the canvas
         draw() {
             ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
-        }
-    }
+        };
+    };
 // Load platform image
 let image = new Image();
 image.src = 'https://samayass.github.io/samayaCSA/images/platform.png'

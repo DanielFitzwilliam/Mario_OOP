@@ -1,5 +1,8 @@
 import {platform} from "./platform.js"
 
+    // Get text element for Mario's health
+    let marioState = document.getElementById("Mario_State")
+
     // Create empty canvas
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
@@ -44,19 +47,31 @@ import {platform} from "./platform.js"
             } else {
                 player.velocity.x = 0;
             };
-                this.handleFloorCollision();
+            this.handleFloorCollision();
+            this.handleDeathCondition();
         };
         // Method to detect if the player is on the ground.
         handleFloorCollision() {
-            if(this.position.y + this.height + this.velocity.y <= canvas.height) {
-                this.velocity.y += gravity;
-                this.grounded = 0;
-            } else {
+            if (this.position.x < platform.position.x + platform.width && this.position.x + this.width + this.velocity.x >= platform.position.x &&
+                this.position.y < platform.position.y + platform.height && this.position.y + this.height + this.velocity.y >= platform.position.y
+            ) {
                 this.velocity.y = 0;
                 this.grounded = 1;
+            } else {
+                this.grounded = 0;
+                this.velocity.y += gravity;
             };
         };
-    }
+        // Method to detect if the player is dead
+        handleDeathCondition() {
+            if(this.position.y > canvas.height) {
+                this.killPlayer();
+            };
+        };
+        killPlayer() {
+            marioState.innerHTML = "Mario is dead, and it's all your fault."
+        };
+    };
     // Create a player object
     const player = new Player();
     // Define keyboard keys and their states
@@ -74,37 +89,21 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     platform.draw();
     player.update();
-    if (
-        player.position.y + player.height <= platform.position.y &&
-        player.position.y + player.height + player.velocity.y >= platform.position.y &&
-        player.position.x + player.width >= platform.position.x &&
-        player.position.x <= platform.position.x + platform.width
-    ) {
-        player.velocity.y = 0;
-        player.grounded = 1;
-    } else {
-        player.grounded = 0;
-    };
 };
-    animate();
+animate();
     // Event listener for keydown events
     addEventListener('keydown', ({ keyCode }) => {
         switch (keyCode) {
             case 65:
-                console.log('left');
                 keys.left.pressed = true;
                 break;
             case 83:
-                console.log('down');
                 break;
             case 68:
-                console.log('right');
                 keys.right.pressed = true;
                 break;
             case 87:
-                console.log('up');
-                if(player.grounded === 1) {                
-                console.log('up');
+                if(player.grounded === 1) {
                 player.velocity.y -= 20;
                 };
                 break;
@@ -114,18 +113,14 @@ function animate() {
     addEventListener('keyup', ({ keyCode }) => {
         switch (keyCode) {
             case 65:
-                console.log('left');
                 keys.left.pressed = false;
                 break;
             case 83:
-                console.log('down');
                 break;
             case 68:
-                console.log('right');
                 keys.right.pressed = false;
                 break;
             case 87:
-                console.log("up")
                 break;
             };
     });
