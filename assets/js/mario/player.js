@@ -37,7 +37,7 @@ import {platform} from "./platform.js"
             marioStateMessage.innerHTML = "Mario is dead, and it's all your fault."
             this.isAlive = 0;
             } else {
-            marioStateMessage.innerHTML =  "Mario is alive and well. : " + this.lives
+            marioStateMessage.innerHTML =  "Mario is alive and well. Lives: " + this.lives
             this.position.x = 100;
             this.position.y = 200;
             this.velocity.x = 0;
