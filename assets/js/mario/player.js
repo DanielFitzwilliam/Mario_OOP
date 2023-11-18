@@ -46,6 +46,7 @@ import {tube} from "./tube.js"
             this.width = 30;
             this.height = 30;
             this.grounded = 0;
+            this.tubed = 0;
             };
         };
         // Method to draw the player on the canvas
@@ -58,32 +59,40 @@ import {tube} from "./tube.js"
             this.draw();
             this.position.y += this.velocity.y;
             this.position.x += this.velocity.x;
-            // Control players horizontal movement
-            if (keys.right.pressed && player.position.x + player.width <= canvas.width - 50) {
-                player.velocity.x = 15;
-            } else if (keys.left.pressed && player.position.x >= 50) {
-                player.velocity.x = -15;
+            if (this.tubed === 2) {
+                this.handleTubeAnimation()
             } else {
-                player.velocity.x = 0;
+                // Control players horizontal movement
+                if (keys.right.pressed && player.position.x + player.width <= canvas.width - 50) {
+                    player.velocity.x = 15;
+                } else if (keys.left.pressed && player.position.x >= 50) {
+                    player.velocity.x = -15;
+                } else {
+                    player.velocity.x = 0;
+                };
+                this.handleFloorCollision(platform.position.x, platform.position.y, platform.width, platform.height, "platform");
+                if (this.grounded === 0) {
+                    this.handleFloorCollision(tube.position.x, tube.position.y, tube.width, tube.height, "tube");
+                };
+                if (this.grounded === 0) {
+                    this.velocity.y += gravity;
+                };
+                this.handleDeathCondition();
             };
-            this.handleFloorCollision(platform.position.x, platform.position.y, platform.width, platform.height);
-            if (this.grounded === 0) {
-                this.handleFloorCollision(tube.position.x, tube.position.y, tube.width, tube.height);
-            };
-            if (this.grounded === 0) {
-                this.velocity.y += gravity;
-            };
-            this.handleDeathCondition();
         };
         // Method to detect if the player is on the ground.
-        handleFloorCollision(left, top, right, bottom) {
+        handleFloorCollision(left, top, right, bottom, object) {
             if (this.position.x < left + right && this.position.x + this.width + this.velocity.x >= left &&
                 this.position.y < top + bottom && this.position.y + this.height + this.velocity.y >= top
             ) {
                 this.velocity.y = 0;
                 this.grounded = 1;
+                if (object === "tube") {
+                    this.tubed = 1;
+                };
             } else {
                 this.grounded = 0;
+                this.tubed = 0;
             };
         };
         // Method to detect if the player is dead
@@ -99,6 +108,14 @@ import {tube} from "./tube.js"
             this.lives--;
             console.log(this.lives)
             this.reset();
+        };
+        handleTubeAnimation() {
+            if(this.position.y > tube.position.y + this.height) {
+                marioStateMessage.innerHTML = "Mario traveled to another dimension."
+            } else {
+                this.position.x = (((tube.position.x * 2) + tube.width) / 2) - (this.width / 2);
+                this.position.y += 5;
+            };
         };
     };
     // Create a player object
@@ -128,6 +145,10 @@ animate();
                 keys.left.pressed = true;
                 break;
             case 83:
+                if (player.tubed === 1) {
+                    player.tubed = 2;
+                    console.log("tuber")
+                };
                 break;
             case 68:
                 keys.right.pressed = true;
