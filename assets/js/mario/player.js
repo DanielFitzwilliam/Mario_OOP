@@ -1,7 +1,7 @@
 import {platform} from "./platform.js"
 
     // Get text element for Mario's health
-    let marioStateMessage = document.getElementById("Mario_State")
+    let marioStateMessage = document.getElementById("Mario_State");
 
     // Create empty canvas
     let canvas = document.getElementById('canvas');
@@ -13,7 +13,7 @@ import {platform} from "./platform.js"
     let gravity = 1.5;
     // Define the Player class
     class Player {
-        constructor() {
+        constructor(lives) {
             // Initial position and velocity of the player
             this.position = {
                 x: 100,
@@ -28,8 +28,16 @@ import {platform} from "./platform.js"
             this.height = 30;
             //Player "grounded" variable
             this.grounded = 0;
+            this.lives = lives;
+            this.isAlive = 1;
+            this.reset();
         }
         reset() {
+            if(this.lives === 0) {
+            marioStateMessage.innerHTML = "Mario is dead, and it's all your fault."
+            this.isAlive = 0;
+            } else {
+            marioStateMessage.innerHTML =  "Mario is alive and well. : " + this.lives
             this.position.x = 100;
             this.position.y = 200;
             this.velocity.x = 0;
@@ -37,12 +45,13 @@ import {platform} from "./platform.js"
             this.width = 30;
             this.height = 30;
             this.grounded = 0;
-        }
+            };
+        };
         // Method to draw the player on the canvas
         draw() {
             ctx.fillStyle = 'red';
             ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        }
+        };
         // Method to update the players position and velocity
         update() {
             this.draw();
@@ -73,17 +82,21 @@ import {platform} from "./platform.js"
         };
         // Method to detect if the player is dead
         handleDeathCondition() {
-            if(this.position.y > canvas.height) {
+            if (
+            this.position.y > canvas.height &&
+            this.isAlive === 1
+            ) {
                 this.killPlayer();
             };
         };
         killPlayer() {
-            marioStateMessage.innerHTML = "Mario is dead, and it's all your fault."
+            this.lives--;
+            console.log(this.lives)
             this.reset();
         };
     };
     // Create a player object
-    const player = new Player();
+    const player = new Player(5);
     // Define keyboard keys and their states
     let keys = {
         right: {
