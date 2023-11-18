@@ -1,3 +1,4 @@
+import {GameObject} from "./gameObject.js"
 import {platform} from "./platform.js"
 import {tube} from "./tube.js"
 
@@ -13,26 +14,28 @@ import {tube} from "./tube.js"
     // Define gravity value
     let gravity = 1.5;
     // Define the Player class
-    class Player {
-        constructor(lives) {
-            // Initial position and velocity of the player
+    class Player extends GameObject {
+        constructor(lives, canvas, config) {
+            super(canvas, config)
+            //Initial position of the player
             this.position = {
                 x: 100,
                 y: 200
             };
+            //Inital velocity of the player
             this.velocity = {
                 x: 0,
                 y: 0
             };
-            // Dimensions of the player
-            this.width = 30;
-            this.height = 30;
+            //this.speed = config.speed;
             //Player "grounded" variable
             this.grounded = 0;
+            //Player lives
             this.lives = lives;
+            //Player state
             this.isAlive = 1;
             this.reset();
-        }
+        };
         reset() {
             if(this.lives === 0) {
             marioStateMessage.innerHTML = "Mario is dead, and it's all your fault."
@@ -119,7 +122,7 @@ import {tube} from "./tube.js"
         };
     };
     // Create a player object
-    const player = new Player(5);
+    const player = new Player(5, "", "");
     // Define keyboard keys and their states
     let keys = {
         right: {
