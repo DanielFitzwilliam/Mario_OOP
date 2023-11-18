@@ -1,4 +1,5 @@
 import {platform} from "./platform.js"
+import {tube} from "./tube.js"
 
     // Get text element for Mario's health
     let marioStateMessage = document.getElementById("Mario_State");
@@ -112,6 +113,7 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     platform.draw();
     player.update();
+    tube.draw();
 };
 animate();
     // Event listener for keydown events
