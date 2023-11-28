@@ -11,4 +11,4 @@ title: Game
 </style>
 <p id = "Mario_State">Mario is alive and well.</p>
 <canvas id='canvas'></canvas>
-<script src="{{site.baseurl}}/assets/js/mario/player.js" type="module"></script>
+<script src="{{site.baseurl}}/assets/js/mario_old/player.js" type="module"></script>

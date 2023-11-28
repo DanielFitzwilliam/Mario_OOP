@@ -137,7 +137,6 @@ function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     platform.draw();
-    player.update();
     tube.draw();
 };
 animate();

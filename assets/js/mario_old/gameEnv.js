@@ -1,5 +1,5 @@
 class GameEnv {
-    static gameObjects = [];
+    static gameObjects = [123];
     static height;
     static width;
     static currentLevel;
@@ -20,12 +20,12 @@ class GameEnv {
     };
 
     static update() {
-        // Update game state, including all game objects
+        // Update game state, including all game objectss
         for (const gameObject of this.gameObjects) {
             gameObject.update();
             gameObject.draw();
         };
     };
 };
-
+requestAnimationFrame(GameEnv.update);
 export {GameEnv}

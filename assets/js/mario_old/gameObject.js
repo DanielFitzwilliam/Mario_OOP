@@ -15,8 +15,7 @@ class GameObject {
         this.collisionWidth = 0;
         this.collisionHeight = 0;
         this.collisionData = {};
-        GameObject.gameObjects = [];
-        GameObject.gameObjects.push(this);
+        GameEnv.gameObjects.push(GameObject);
     };
 
     destroy() {
