@@ -1,7 +1,7 @@
 import GameEnv from './GameEnv.js';
 import Character from './Character.js';
 import deathController from './Death.js';
-import {Enemy, destroy} from './Enemy.js';
+//import {Enemy, destroy} from './Enemy.js';
 
 export class Player extends Character{
     // constructors sets up Character object 
@@ -125,24 +125,67 @@ export class Player extends Character{
             // Collision with the left side of the Tube
             if (this.collisionData.touchPoints.other.left) {
                 this.movement.right = false;
-                console.log("tube touch left");
             }
             // Collision with the right side of the Tube
             if (this.collisionData.touchPoints.other.right) {
                 this.movement.left = false;
-                console.log("tube touch right");
             }
             // Collision with the top of the player
             if (this.collisionData.touchPoints.other.ontop) {
-                this.movement.down = false;
                 this.x = this.collisionData.touchPoints.other.x;
-                console.log("tube touch top");
             }
-        } else {
+        }
+        if (this.collisionData.touchPoints.other.id === "PLatformO") {
+            // Collision with the left side of the Tub
+            console.log("id")
+            if (this.collisionData.touchPoints.other.left && (this.topOfPlatform === true)) {
+                this.movement.right = false;
+                console.log("a")
+            }
+            // Collision with the right side of the Tube
+            if (this.collisionData.touchPoints.other.right && (this.topOfPlatform === true)) {
+                this.movement.left = false;
+                console.log("b")
+            }
+            // Collision with the top of the player
+            if (this.collisionData.touchPoints.this.ontop) {
+                this.gravityEnabled = false;
+                console.log("c")
+            }
+            if (this.collisionData.touchPoints.this.bottom) {
+                this.gravityEnabled = false;
+                console.log("d")
+            }
+            if (this.collisionData.touchPoints.this.top) {
+                this.gravityEnabled = false;
+                this.topOfPlatform = true; 
+                console.log(this.topOfPlatform + "top")
+                console.log(this.gravityEnabled + "grav")
+                //console.log("e");
+            }
+        }
+        else {
+            if (this.collisionData.touchPoints.other.id === "thing2") {
+                // Collision with the left side of the Tub
+                if (this.collisionData.touchPoints.coin.left) {
+                    this.touchCoin = true;
+                    console.log("o")
+                    window.location.reload();
+                }
+                // Collision with the right side of the Tube
+                if (this.collisionData.touchPoints.coin.right) {
+                    console.log("p")
+                    this.touchCoin = true;
+                    window.location.reload();
+                }
+            }    
+            
             // Reset movement flags if not colliding with a tube
+            this.topOfPlatform = false;
             this.movement.left = true;
             this.movement.right = true;
             this.movement.down = true;
+            this.gravityEnabled = true;
         }
         // Enemy collision
         if (this.collisionData.touchPoints.other.id === "enemy") {
@@ -158,7 +201,7 @@ export class Player extends Character{
             if (this.collisionData.touchPoints.other.ontop) {
                 console.log("Bye Goomba");
                 this.y -= (this.bottom * .33);
-                destroy = 1;
+                //destroy = 1;
             }
         }
     }

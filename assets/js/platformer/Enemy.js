@@ -1,7 +1,7 @@
 import Character from './Character.js';
 import GameEnv from './GameEnv.js';
 
-var destroy = 0;
+//var destroy = 0;
 
 export class Enemy extends Character {
     // constructors sets up Character object 
@@ -13,7 +13,7 @@ export class Enemy extends Character {
             enemyData.height, 
         );
 
-        destroy = 0;
+        //destroy = 0;
         // Player Data is required for Animations
         this.enemyData = enemyData;
 
@@ -44,10 +44,10 @@ export class Enemy extends Character {
         this.x += this.speed;
         
         //detect if the goomba is dead
-        if (destroy === 1) {
-            this.destroy();
-            console.log("destroyed");
-        };
+        //if (destroy === 1) {
+            //this.destroy();
+            //console.log("destroyed");
+        //};
     };
     
     performGoombaSpecial() {
@@ -91,5 +91,5 @@ export class Enemy extends Character {
     } */
 }
 
-export {destroy}
+//export {destroy}
 export default Enemy

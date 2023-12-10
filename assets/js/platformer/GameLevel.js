@@ -1,6 +1,7 @@
 import GameEnv from './GameEnv.js';
 import Background from './Background.js';
 import Platform from './Platform.js';
+import PlatformO from './PlatformO.js';
 import Player from './Player.js';
 import Tube from './Tube.js';
 import Enemy from './Enemy.js';
@@ -12,6 +13,7 @@ class GameLevel {
         this.tag = gameObject?.tag;
         this.backgroundImg = gameObject.background?.file;
         this.platformImg = gameObject.platform?.file;
+        this.platformOImg = gameObject.platformO?.file;
         this.playerImg = gameObject.player?.file;
         this.playerData = gameObject?.player;
         this.enemyImg = gameObject.enemy?.file;
@@ -31,6 +33,9 @@ class GameLevel {
         }
         if (this.platformImg) {
             imagesToLoad.push(this.loadImage(this.platformImg));
+        }
+        if (this.platformOImg) {
+            imagesToLoad.push(this.loadImage(this.platformOImg));
         }
         if (this.playerImg) {
             imagesToLoad.push(this.loadImage(this.playerImg));
@@ -64,6 +69,15 @@ class GameLevel {
                 document.querySelector("#canvasContainer").appendChild(platformCanvas);
                 const platformSpeedRatio = 0;
                 new Platform(platformCanvas, loadedImages[i], platformSpeedRatio);
+                i++;
+            }
+
+            if (this.platformOImg) {
+                const platformOCanvas = document.createElement("canvas");
+                platformOCanvas.id = "platformO";
+                document.querySelector("#canvasContainer").appendChild(platformOCanvas);
+                const platformOSpeedRatio = 0;
+                new PlatformO(platformOCanvas, loadedImages[i], platformOSpeedRatio);
                 i++;
             }
 
