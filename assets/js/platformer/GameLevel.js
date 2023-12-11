@@ -3,6 +3,7 @@ import Background from './Background.js';
 import Background2 from './Background2.js'
 import Platform from './Platform.js';
 import PlatformO from './PlatformO.js';
+import Thing from './Thing.js'
 import Player from './Player.js';
 import Tube from './Tube.js';
 import Enemy from './Enemy.js';
@@ -16,6 +17,7 @@ class GameLevel {
         this.backgroundImg = gameObject.background?.file;
         this.platformImg = gameObject.platform?.file;
         this.platformOImg = gameObject.platformO?.file;
+        this.thingImg = gameObject.thing?.file;
         this.playerImg = gameObject.player?.file;
         this.playerData = gameObject?.player;
         this.enemyImg = gameObject.enemy?.file;
@@ -30,17 +32,20 @@ class GameLevel {
         
         // test for presence of Images
         const imagesToLoad = [];
-        if (this.backgroundImg) {
-            imagesToLoad.push(this.loadImage(this.backgroundImg));
-        }
         if (this.backgroundImg2) {
             imagesToLoad.push(this.loadImage(this.backgroundImg2));
+        }
+        if (this.backgroundImg) {
+            imagesToLoad.push(this.loadImage(this.backgroundImg));
         }
         if (this.platformImg) {
             imagesToLoad.push(this.loadImage(this.platformImg));
         }
         if (this.platformOImg) {
             imagesToLoad.push(this.loadImage(this.platformOImg));
+        }
+        if (this.thingImg) {
+            imagesToLoad.push(this.loadImage(this.thingImg));
         }
         if (this.playerImg) {
             imagesToLoad.push(this.loadImage(this.playerImg));
@@ -94,6 +99,15 @@ class GameLevel {
                 document.querySelector("#canvasContainer").appendChild(platformOCanvas);
                 const platformOSpeedRatio = 0;
                 new PlatformO(platformOCanvas, loadedImages[i], platformOSpeedRatio);
+                i++;
+            }
+            
+            if (this.thingImg) {
+                const thingCanvas = document.createElement("canvas");
+                thingCanvas.id = "thing";
+                document.querySelector("#canvasContainer").appendChild(thingCanvas);
+                const thingSpeedRatio = 0;
+                new Thing(thingCanvas, loadedImages[i], thingSpeedRatio);
                 i++;
             }
 
