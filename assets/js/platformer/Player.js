@@ -135,7 +135,7 @@ export class Player extends Character{
                 this.x = this.collisionData.touchPoints.other.x;
             }
         }
-        if (this.collisionData.touchPoints.other.id === "PLatformO") {
+        if (this.collisionData.touchPoints.other.id === "platformO") {
             // Collision with the left side of the Tub
             console.log("id")
             if (this.collisionData.touchPoints.other.left && (this.topOfPlatform === true)) {
