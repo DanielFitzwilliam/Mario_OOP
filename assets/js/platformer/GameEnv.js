@@ -18,6 +18,7 @@ export class GameEnv {
     static prevFloor;
     // calculated size properties
     static backgroundHeight = 0;
+    static backgroundSpeed = 0;
     static backgroundSpeed2 = 0;
     static platformHeight = 0;
 

@@ -215,6 +215,14 @@ export class Player extends Character{
                 this.setAnimation(key);
                 // player active
                 this.isIdle = false;
+                if (event.key === "a") {
+                    GameEnv.backgroundSpeed2 = -0.1;
+                    GameEnv.backgroundSpeed = -0.4;
+                }
+                if (event.key === "d") {
+                    GameEnv.backgroundSpeed2 = 0.1;
+                    GameEnv.backgroundSpeed = 0.4;
+                }
             }
         }
     }
@@ -228,7 +236,15 @@ export class Player extends Character{
             }
             this.setAnimation(key);  
             // player idle
-            this.isIdle = true;     
+            this.isIdle = true;  
+            if (event.key === "a") {
+                GameEnv.backgroundSpeed2 = 0;
+                GameEnv.backgroundSpeed = 0;
+            }
+            if (event.key === "d") {
+                GameEnv.backgroundSpeed2 = 0;
+                GameEnv.backgroundSpeed = 0;
+            }
         }
     }
 
