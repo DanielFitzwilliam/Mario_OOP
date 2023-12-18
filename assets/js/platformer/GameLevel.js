@@ -95,7 +95,7 @@ class GameLevel {
 
             if (this.platformOImg) {
                 const platformOCanvas = document.createElement("canvas");
-                platformOCanvas.id = "platformO";
+                platformOCanvas.id = "PlatformO";
                 document.querySelector("#canvasContainer").appendChild(platformOCanvas);
                 const platformOSpeedRatio = 0;
                 new PlatformO(platformOCanvas, loadedImages[i], platformOSpeedRatio);
@@ -116,7 +116,7 @@ class GameLevel {
                 const playerCanvas = document.createElement("canvas");
                 playerCanvas.id = "character";
                 document.querySelector("#canvasContainer").appendChild(playerCanvas);
-                const playerSpeedRatio = 0.7;
+                const playerSpeedRatio = 2;
                 new Player(playerCanvas, loadedImages[i], playerSpeedRatio, this.playerData);
                 i++;
             }

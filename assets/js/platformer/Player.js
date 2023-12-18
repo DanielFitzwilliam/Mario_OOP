@@ -1,39 +1,39 @@
 import GameEnv from './GameEnv.js';
 import Character from './Character.js';
 import deathController from './Death.js';
-//import {Enemy, destroy} from './Enemy.js';
 
 export class Player extends Character{
-    // constructors sets up Character object 
-    constructor(canvas, image, speedRatio, playerData){
-        super(canvas, 
-            image, 
+    // constructors sets up Character object
+    constructor(canvas, image, speedRatio, playerData, speedLimit) {
+        super(canvas,
+            image,
             speedRatio,
-            playerData.width, 
-            playerData.height, 
+            playerData.width,
+            playerData.height,
         );
         // Player Data is required for Animations
         this.playerData = playerData;
-
         this.spriteScale = 1;
-
         // Player control data
         this.pressedKeys = {};
         this.movement = {left: true, right: true, down: true};
         this.isIdle = true;
         this.stashKey = "d"; // initial key
-
         // Store a reference to the event listener function
         this.keydownListener = this.handleKeyDown.bind(this);
         this.keyupListener = this.handleKeyUp.bind(this);
-
         // Add event listeners
         document.addEventListener('keydown', this.keydownListener);
         document.addEventListener('keyup', this.keyupListener);
-
+        /*// Begin additions from animation lessons
+        // Speed Limit, remove if necessary
+        this.speedLimit = speedLimit;
+        this.currentspeed = 0;
+        this.acceleration = 0.11;
+        this.deceleration = 0.1;
+        //End additons from animation lessons*/
         GameEnv.player = this;
     }
-
     setAnimation(key) {
         // animation comes from playerData
         var animation = this.playerData[key]
@@ -53,26 +53,21 @@ export class Player extends Character{
             this.setMinFrame(animation.idleFrame.frames);
         }
     }i
-    
     // check for matching animation
     isAnimation(key) {
         var result = false;
         if (key in this.pressedKeys) {
             result = !this.isIdle;
         }
-        
         return result;
     }
-
     // check for gravity based animation
     isGravityAnimation(key) {
         var result = false;
-    
         // verify key is in active animations
         if (key in this.pressedKeys) {
-            result = (!this.isIdle && (this.topOfPlatform ||this.bottom <= this.y));
+            result = (!this.isIdle && (this.topOfPlatform || this.bottom <= this.y));
         }
-
         // scene for on top of tube animation
         if (!this.movement.down) {
             this.gravityEnabled = false;
@@ -86,25 +81,21 @@ export class Player extends Character{
                 }, 1000);
             }, 2000);
         }
-    
         // make sure jump has ssome velocity
         if (result) {
             // Adjust horizontal position during the jump
             const horizontalJumpFactor = 0.1; // Adjust this factor as needed
-            this.x += this.speed * horizontalJumpFactor;  
+            this.x += this.speed * horizontalJumpFactor;
         }
-    
         // return to directional animation (direction?)
         if (this.bottom <= this.y) {
             this.setAnimation(this.stashKey);
         }
-    
         return result;
     }
-    
-
     // Player updates
     update() {
+        // Original movement code VVV
         if (this.isAnimation("a")) {
             if (this.movement.left) this.x -= this.speed;  // Move to left
         }
@@ -113,39 +104,94 @@ export class Player extends Character{
         }
         if (this.isGravityAnimation("w")) {
             if (this.movement.down) this.y -= (this.bottom * .33);  // jump 33% higher than bottom
-        } 
-
+        }
+        /* // More stuff from the animation lesson
+        // Adjust speed based on pressed keys
+        if (this.pressedKeys['a'] && this.movement.left) {
+            this.currentSpeed -= this.acceleration;
+        } else if (this.pressedKeys['d'] && this.movement.right) {
+            this.currentSpeed += this.acceleration;
+        } else {
+            // Decelerate when no movement keys are pressed
+            this.currentSpeed *= (1 - this.deceleration);
+        }
+        // End stuff from animation lesson */
+        //Prevents Player from leaving screen
+        if (this.x <= 0) {
+            this.x += 5
+        }
+        /* // Beginning of the additions by the Animation team
+        // Speed Limit forcer, remove if necessary
+        if (Math.abs(this.currentSpeed) > this.speedLimit) {
+            this.currentSpeed= this.currentSpeed > 0 ? this.speedLimit : - this.speedLimit;
+        }
+        // Second part of speed limit
+        this.x += this.currentSpeed;
+        // Speed Thresholds
+        const walkingSpeedThreshold = 1; // Walking speed threshold
+        const runningSpeedThreshold = 5; // Running speed threshold
+        // End lesson additions
+        // More lesson additons
+        if (Math.abs(this.currentSpeed) >= runningSpeedThreshold) {
+            // Change sprite sheet row for running
+            if (this.currentSpeed > 0) {
+            this.setFrameY(this.playerData.runningRight.row);
+            } else {
+                this.setFrameY(this.playerData.runningLeft.row);
+            }
+        } else if (Math.abs(this.currentSpeed) >= walkingSpeedThreshold) {
+            // Change sprite sheet row for walking
+            if (this.currentSpeed > 0) {
+                this.setFrameY(this.playerData.d.row);
+            } else {
+                this.setFrameY(this.playerData.a.row);
+            }
+            } else {
+            // Revert to normal animation if speed is below the walking threshold
+            this.setFrameY(this.playerData.idle.row);
+            }
+        // the super.update is part of the original code
+        //End of additions by animation team */
         // Perform super update actions
         super.update();
     }
-
     // Player action on tube collisions
     collisionAction() {
         if (this.collisionData.touchPoints.other.id === "tube") {
             // Collision with the left side of the Tube
             if (this.collisionData.touchPoints.other.left) {
                 this.movement.right = false;
+                console.log("tube touch left");
             }
             // Collision with the right side of the Tube
             if (this.collisionData.touchPoints.other.right) {
                 this.movement.left = false;
+                console.log("tube touch right");
             }
             // Collision with the top of the player
             if (this.collisionData.touchPoints.other.ontop) {
+                this.movement.down = false;
                 this.x = this.collisionData.touchPoints.other.x;
+                console.log("tube touch top");
             }
-        }
-        if (this.collisionData.touchPoints.other.id === "platformO") {
-            // Collision with the left side of the Tub
-            console.log("id")
+        } else {
+            // Reset movement flags if not colliding with a tube
+            this.movement.left = true;
+            this.movement.right = true;
+            this.movement.down = true;
+        };
+        // *******************************
+        // Platform collision
+        if (this.collisionData.touchPoints.other.id === "PlatformO") {
+            // Collision with the left side of the Platform
             if (this.collisionData.touchPoints.other.left && (this.topOfPlatform === true)) {
                 this.movement.right = false;
-                console.log("a")
+                console.log("platform left")
             }
-            // Collision with the right side of the Tube
+            // Collision with the right side of the platform
             if (this.collisionData.touchPoints.other.right && (this.topOfPlatform === true)) {
                 this.movement.left = false;
-                console.log("b")
+                console.log("platform right")
             }
             // Collision with the top of the player
             if (this.collisionData.touchPoints.this.ontop) {
@@ -158,35 +204,20 @@ export class Player extends Character{
             }
             if (this.collisionData.touchPoints.this.top) {
                 this.gravityEnabled = false;
-                this.topOfPlatform = true; 
+                this.topOfPlatform = true;
                 console.log(this.topOfPlatform + "top")
                 console.log(this.gravityEnabled + "grav")
                 //console.log("e");
             }
-        }
-        else {
-            if (this.collisionData.touchPoints.other.id === "thing2") {
-                // Collision with the left side of the Tub
-                if (this.collisionData.touchPoints.coin.left) {
-                    this.touchCoin = true;
-                    console.log("o")
-                    window.location.reload();
-                }
-                // Collision with the right side of the Tube
-                if (this.collisionData.touchPoints.coin.right) {
-                    console.log("p")
-                    this.touchCoin = true;
-                    window.location.reload();
-                }
-            }    
-            
-            // Reset movement flags if not colliding with a tube
+        } else {
             this.topOfPlatform = false;
-            this.movement.left = true;
-            this.movement.right = true;
-            this.movement.down = true;
             this.gravityEnabled = true;
-        }
+            /* this.movement.left = true;
+            this.movement.right = true;
+            this.movement.down = true; */
+        };
+        // The else statement above may be causing issues
+        // *******************************
         // Enemy collision
         if (this.collisionData.touchPoints.other.id === "enemy") {
             // Collision with the left side of the Enemy
@@ -201,11 +232,27 @@ export class Player extends Character{
             if (this.collisionData.touchPoints.other.ontop) {
                 console.log("Bye Goomba");
                 this.y -= (this.bottom * .33);
-                //destroy = 1;
+                deathController.setDeath(1);
+            }
+        };
+        /* Code below was provded for adding a hitbox to the coin.
+        else {
+            if (this.collisionData.touchPoints.other.id === "thing2") {
+            // Collision with the left side of the Tub
+            if (this.collisionData.touchPoints.coin.left) {
+                this.touchCoin = true;
+                console.log("o")
+                window.location.reload();
+            }
+            // Collision with the right side of the Tube
+            if (this.collisionData.touchPoints.coin.right) {
+                console.log("p")
+                this.touchCoin = true;
+                window.location.reload();
             }
         }
+        */
     }
-        
     // Event listener key down
     handleKeyDown(event) {
         if (this.playerData.hasOwnProperty(event.key)) {
@@ -215,18 +262,17 @@ export class Player extends Character{
                 this.setAnimation(key);
                 // player active
                 this.isIdle = false;
-                if (event.key === "a") {
-                    GameEnv.backgroundSpeed2 = -0.1;
-                    GameEnv.backgroundSpeed = -0.4;
-                }
-                if (event.key === "d") {
-                    GameEnv.backgroundSpeed2 = 0.1;
-                    GameEnv.backgroundSpeed = 0.4;
-                }
+            }
+            if (key === "a") {
+                GameEnv.background2Speed = -0.5;
+                GameEnv.backgroundSpeed = -0.4; // Caused issues so was removed
+            }
+            if (key === "d") {
+                GameEnv.background2Speed = 0.5;
+                GameEnv.backgroundSpeed = 0.4; // Caused issues so was removed
             }
         }
     }
-
     // Event listener key up
     handleKeyUp(event) {
         if (this.playerData.hasOwnProperty(event.key)) {
@@ -234,30 +280,26 @@ export class Player extends Character{
             if (event.key in this.pressedKeys) {
                 delete this.pressedKeys[event.key];
             }
-            this.setAnimation(key);  
+            if (key === "a") {
+                GameEnv.backgroundSpeed = 0;
+                GameEnv.foregroundSpeed = 0; // Caused issues so was removed
+            }
+            if (key === "d") {
+                GameEnv.backgroundSpeed = 0;
+                GameEnv.foregroundSpeed = 0; // Caused issues so was removed
+            }
+            this.setAnimation(key);
             // player idle
-            this.isIdle = true;  
-            if (event.key === "a") {
-                GameEnv.backgroundSpeed2 = 0;
-                GameEnv.backgroundSpeed = 0;
-            }
-            if (event.key === "d") {
-                GameEnv.backgroundSpeed2 = 0;
-                GameEnv.backgroundSpeed = 0;
-            }
+            this.isIdle = true;
         }
     }
-
-    // Override destroy() method from GameObject to remove event listeners
+// Override destroy() method from GameObject to remove event listeners
     destroy() {
         // Remove event listeners
         document.removeEventListener('keydown', this.keydownListener);
         document.removeEventListener('keyup', this.keyupListener);
-
         // Call the parent class's destroy method
         super.destroy();
     }
 }
-
-
 export default Player;

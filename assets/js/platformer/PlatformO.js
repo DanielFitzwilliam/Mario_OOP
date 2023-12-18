@@ -8,7 +8,6 @@ export class PlatformO extends GameObject {
 
     // Required, but no update action
     update() {
-        console.log("update2")
     }
 1
     // Draw position is always 0,0
