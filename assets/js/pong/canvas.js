@@ -8,10 +8,10 @@ const ctx = canvas.getContext("2d");
 function drawBg() {
     const image = new Image();
     if (selectedValue === "Calvin") { //draws the image based on the radio button that is clicked.
-        image.src = "/student/images/Calvin.png";
+        image.src = "/Mario_OOP/images/dogs/Calvin.png";
     }
     else if (selectedValue === "Freckles") {
-        image.src = "/student/images/Freckles.png";
+        image.src = "/Mario_OOP/images/dogs/Freckles.png";
     }
     
     image.onload = function() {

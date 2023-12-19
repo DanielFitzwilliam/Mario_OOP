@@ -17,7 +17,7 @@ blog: true
     <h1>Canvas</h1>
     <div>
     <canvas id="window" width=500 height=300></canvas>
-    <script src="/student/js/canvas.js" type="module">
+    <script src="/Mario_OOP/js/canvas.js" type="module">
     </script>
     </div>
     <div id="radios">
@@ -28,6 +28,6 @@ blog: true
     </div>
     <div id="button">
         <input type="button" id="play" name="play" value="Play Game"><br>
-        <script src="/student/js/gameLoop.js" type="module">
+        <script src="/Mario_OOP/js/gameLoop.js" type="module">
     </div>
 </body>
