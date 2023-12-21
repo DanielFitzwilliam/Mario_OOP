@@ -92,7 +92,7 @@ image: /images/platformer/backgrounds/hills.png
           wa: { row: 11, frames: 15 },
           wd: { row: 10, frames: 15 },
           a: { row: 3, frames: 7, idleFrame: { column: 7, frames: 0 } },
-          s: {  },
+          s: { row: 12, frames: 15 },
           d: { row: 2, frames: 7, idleFrame: { column: 7, frames: 0 } }
         },
         monkey: {
@@ -103,7 +103,7 @@ image: /images/platformer/backgrounds/hills.png
           wa: { row: 9, frames: 15 },
           wd: { row: 9, frames: 15 },
           a: { row: 1, frames: 15, idleFrame: { column: 7, frames: 0 } },
-          s: { row: 12, frames: 15 },
+          s: { row: 6, frames: 0},
           d: { row: 0, frames: 15, idleFrame: { column: 7, frames: 0 } }
         },
       },

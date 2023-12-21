@@ -22,6 +22,7 @@ export class Player extends Character{
         // Store a reference to the event listener function
         this.keydownListener = this.handleKeyDown.bind(this);
         this.keyupListener = this.handleKeyUp.bind(this);
+        //cooldown for dashing
         // Add event listeners
         document.addEventListener('keydown', this.keydownListener);
         document.addEventListener('keyup', this.keyupListener);
@@ -95,6 +96,12 @@ export class Player extends Character{
     }
     // Player updates
     update() {
+        if(this.isAnimation("s")) {
+            this.speed += this.speed;
+            this.canvas.style.filter = "invert(1)"
+        } else {
+            this.canvas.style.filter = "invert(0)"
+        }
         // Original movement code VVV
         if (this.isAnimation("a")) {
             if (this.movement.left) this.x -= this.speed;  // Move to left
@@ -104,6 +111,9 @@ export class Player extends Character{
         }
         if (this.isGravityAnimation("w")) {
             if (this.movement.down) this.y -= (this.bottom * .33);  // jump 33% higher than bottom
+        }
+        if(this.isAnimation("s")) {
+            this.speed -= (this.speed / 2);
         }
         /* // More stuff from the animation lesson
         // Adjust speed based on pressed keys
