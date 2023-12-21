@@ -264,12 +264,12 @@ export class Player extends Character{
                 this.isIdle = false;
             }
             if (key === "a") {
-                GameEnv.background2Speed = -0.5;
-                GameEnv.backgroundSpeed = -0.4; // Caused issues so was removed
+                GameEnv.backgroundSpeed = -0.5;
+                GameEnv.backgroundSpeed2 = -0.1;
             }
             if (key === "d") {
-                GameEnv.background2Speed = 0.5;
-                GameEnv.backgroundSpeed = 0.4; // Caused issues so was removed
+                GameEnv.backgroundSpeed = 0.5;
+                GameEnv.backgroundSpeed2 = 0.1; 
             }
         }
     }
@@ -282,11 +282,11 @@ export class Player extends Character{
             }
             if (key === "a") {
                 GameEnv.backgroundSpeed = 0;
-                GameEnv.foregroundSpeed = 0; // Caused issues so was removed
+                GameEnv.backgroundSpeed2 = 0; 
             }
             if (key === "d") {
                 GameEnv.backgroundSpeed = 0;
-                GameEnv.foregroundSpeed = 0; // Caused issues so was removed
+                GameEnv.backgroundSpeed2 = 0; 
             }
             this.setAnimation(key);
             // player idle

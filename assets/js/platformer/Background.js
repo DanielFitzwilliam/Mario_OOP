@@ -12,9 +12,13 @@ export class Background extends GameObject {
     *  width is extent of background image
     */
     update() {
-        this.speed = GameEnv.backgroundSpeed;
-        this.x = (this.x - this.speed) % this.width;
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.x -= this.speed;
+        if (GameEnv.levels.indexOf(GameEnv.currentLevel) === 4 || GameEnv.levels.indexOf(GameEnv.currentLevel) === 1) {
+            this.speed = 0;
+        } else {
+            this.speed = GameEnv.backgroundSpeed;
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
     }
 
     /* To draws are used to capture primary frame and wrap around ot next frame

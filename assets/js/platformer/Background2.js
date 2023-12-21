@@ -4,7 +4,7 @@ import GameObject from './GameObject.js';
 export class Background2 extends GameObject {
     constructor(canvas, image, speedRatio) {
         super(canvas, image, speedRatio);
-        this.x = -1000;
+        this.x = 0;
     }
 
     /* Update uses modulo math to cycle to start at width extent
@@ -14,7 +14,8 @@ export class Background2 extends GameObject {
     */
     update() {
         this.speed = GameEnv.backgroundSpeed2;
-        this.x = (this.x - this.speed) % this.width;
+        this.x -= this.speed;
+        //console.log(GameEnv.backgroundSpeed2, this.speed);
     }
 
     /* To draws are used to capture primary frame and wrap around ot next frame
