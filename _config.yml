@@ -19,5 +19,5 @@ plugins:
 - jekyll-remote-theme
 future: true
 header_pages:
-  - 2023-11-27-CSSE-oop-game-levels.md
+  - 2024-01-08-CSSE-oop-game-levels2.md
   - AC_csse.md
