@@ -165,7 +165,9 @@ const GameSetup = {
       platforms: {
         grass: { src: "/images/platformer/platforms/grass.png" },
         alien: { src: "/images/platformer/platforms/alien.png" },
-        bricks: { src: "/images/platformer/platforms/brick_wall.png" },
+        bricks: { 
+          src: "/images/platformer/platforms/brick_wall.png",
+        },
       },
       backgrounds: {
         start: { src: "/images/platformer/backgrounds/home.png" },
@@ -276,7 +278,8 @@ const GameSetup = {
         { name: 'mountains', id: 'background', class: BackgroundMountains,  data: this.assets.backgrounds.mountains },
         { name: 'hills', id: 'background', class: BackgroundHills, data: this.assets.backgrounds.hills },
         { name: 'grass', id: 'platform', class: Platform, data: this.assets.platforms.grass },
-        { name: 'bricks', id: 'jumpPlatform', class: JumpPlatform, data: this.assets.platforms.bricks },
+        { name: 'bricks', id: 'jumpPlatform', class: JumpPlatform, data: this.assets.platforms.bricks, xPosition: 0.1, yPosition: 0.8 },
+        { name: 'bricks', id: 'jumpPlatform', class: JumpPlatform, data: this.assets.platforms.bricks, xPosition: 0.7, yPosition: 0.8 }, //second platform
         { name: 'goomba', id: 'goomba', class: Goomba, data: this.assets.enemies.goomba },
         { name: 'mario', id: 'player', class: Player, data: this.assets.players.mario },
         { name: 'tube', id: 'tube', class: Tube, data: this.assets.obstacles.tube },
