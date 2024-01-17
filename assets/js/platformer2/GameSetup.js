@@ -166,7 +166,7 @@ const GameSetup = {
         grass: { src: "/images/platformer/platforms/grass.png" },
         alien: { src: "/images/platformer/platforms/alien.png" },
         bricks: { src: "/images/platformer/platforms/brick_wall.png", sizeRatio: 30 },
-        block: { src: "/images/platformer/platforms/mario_block_spritesheet.png", sizeRatio: 83.2 },
+        block: { src: "/images/platformer/platforms/mario_block.jpg", sizeRatio: 83.2 },
       },
       backgrounds: {
         start: { src: "/images/platformer/backgrounds/home.png" },

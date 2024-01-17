@@ -11,12 +11,11 @@ export class JumpPlatform extends GameObject {
 
     // Required, but no update action
     update() {
-        console.log(this.image.width)
     }
 
     // Draw position is always 0,0
     draw() {
-        this.ctx.drawImage(this.image, 0, 0,);
+        this.ctx.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
     }
 
     // Set platform position
