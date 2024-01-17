@@ -6,24 +6,24 @@ export class JumpPlatform extends GameObject {
         super(canvas, image, data);
         this.data = data;
         this.xPosition = xPosition;
-        this.yPosition = yPosition
+        this.yPosition = yPosition;
     }
 
     // Required, but no update action
     update() {
-        console.log(this.xPosition);
+        console.log(this.image.width)
     }
 
     // Draw position is always 0,0
     draw() {
-        this.ctx.drawImage(this.image, this.xPosition, this.yPosition);
+        this.ctx.drawImage(this.image, 0, 0,);
     }
 
     // Set platform position
     size() {
         // Formula for Height should be on constant ratio, using a proportion of 832
-        const scaledHeight = GameEnv.innerHeight * (30/832);
-        const scaledWidth = GameEnv.innerHeight * .1;  // width of jump platform is 1/10 of height
+        const scaledHeight = GameEnv.innerHeight * (this.data.sizeRatio / 832);
+        const scaledWidth = GameEnv.innerHeight * 1/10;  // width of jump platform is 1/10 of height
         const platformX = GameEnv.innerWidth * this.xPosition;
         const platformY = (GameEnv.bottom - scaledHeight)  * this.yPosition;
 
