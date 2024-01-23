@@ -153,6 +153,7 @@ export class Player extends Character{
      * @override
      */
     collisionAction() {
+        //console.log(this.collisionData.touchPoints.other.id)
         if (this.collisionData.touchPoints.other.id === "tube") {
             // Collision with the left side of the Tube
             if (this.collisionData.touchPoints.other.left) {

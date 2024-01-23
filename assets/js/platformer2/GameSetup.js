@@ -165,8 +165,17 @@ const GameSetup = {
       platforms: {
         grass: { src: "/images/platformer/platforms/grass.png" },
         alien: { src: "/images/platformer/platforms/alien.png" },
-        bricks: { src: "/images/platformer/platforms/brick_wall.png", sizeRatio: 30 },
-        block: { src: "/images/platformer/platforms/mario_block.jpg", sizeRatio: 83.2 },
+        bricks: { src: "/images/platformer/platforms/brick_wall.png", sizeRatio: 30, widthRatio: 0.5, heightRatio: 1.0 },
+        block: {
+          src: "/images/platformer/platforms/mario_block_spritesheet_v2.png",
+          sizeRatio: 83.2,
+          widthRatio: 0.5,
+          heightRatio: 1.0,
+          width: 204,
+          height: 204,
+          scaleSize: 80,
+          speedRatio: 0.7,
+        },
       },
       backgrounds: {
         start: { src: "/images/platformer/backgrounds/home.png" },
@@ -278,7 +287,7 @@ const GameSetup = {
         { name: 'hills', id: 'background', class: BackgroundHills, data: this.assets.backgrounds.hills },
         { name: 'grass', id: 'platform', class: Platform, data: this.assets.platforms.grass },
         { name: 'bricks', id: 'jumpPlatform', class: JumpPlatform, data: this.assets.platforms.bricks, xPosition: 0.1, yPosition: 0.8 },
-        { name: 'bricks', id: 'jumpPlatform', class: JumpPlatform, data: this.assets.platforms.block, xPosition: 0.7, yPosition: 0.8 }, //second platform
+        { name: 'block', id: 'jumpPlatform', class: JumpPlatform, data: this.assets.platforms.block, xPosition: 0.3, yPosition: 0.6 }, //second platform
         { name: 'goomba', id: 'goomba', class: Goomba, data: this.assets.enemies.goomba },
         { name: 'mario', id: 'player', class: Player, data: this.assets.players.mario },
         { name: 'tube', id: 'tube', class: Tube, data: this.assets.obstacles.tube },
