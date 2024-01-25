@@ -17,14 +17,13 @@ export class JumpPlatform extends GameObject {
     // Required, but no update action
     update() {
         this.collisionChecks();
-        this.draw();
     }
 
     collisionAction() {
         //collision only detects mario and it only applies to the item block
         if (this.collisionData.touchPoints.other.id === "player" && this.name === "block") {
-            if (this.relativeX === 0 || this.relativeX === -300) {
-                this.relativeX = -300;
+            if (this.relativeX === 0 || this.relativeX === this.image.width / 2) {
+                this.relativeX = -1 * this.image.width / 2;
             } else {
                 this.relativeX = 0;
                 console.log(this.relativeX)
