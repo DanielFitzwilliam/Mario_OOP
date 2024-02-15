@@ -20,4 +20,5 @@ plugins:
 future: true
 header_pages:
   - 2024-01-08-CSSE-oop-game-levels2.md
+  - 2023-11-27-CSSE-oop-game-levels.md
   - AC_csse.md
